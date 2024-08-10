@@ -513,7 +513,7 @@ bshas(BSet *bs, uint elt)
 
 /* parse.c */
 extern Op optab[NOp];
-void parse(FILE *, char *, void (char *), void (Dat *), void (Fn *));
+void parse(FILE *, char *, void (char *), void (int, int, int), void (Dat *), void (Fn *));
 void printfn(Fn *, FILE *);
 void printref(Ref, Fn *, FILE *);
 void err(char *, ...) __attribute__((noreturn));
@@ -578,7 +578,7 @@ void rega(Fn *);
 void emitfnlnk(char *, Lnk *, FILE *);
 void emitdat(Dat *, FILE *);
 void emitdbgfile(char *, FILE *);
-void emitdbgloc(uint, uint, FILE *);
+void emitdbgloc(uint, uint, uint, FILE *);
 int stashbits(void *, int);
 void elf_emitfnfin(char *, FILE *);
 void elf_emitfin(FILE *);

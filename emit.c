@@ -245,10 +245,14 @@ emitdbgfile(char *fn, FILE *f)
 }
 
 void
-emitdbgloc(uint line, uint col, FILE *f)
+emitdbgloc(uint line, uint col, uint indent, FILE *f)
 {
+	for (uint i = 0; i < indent; i++) {
+		fprintf(f, "\t");
+	}
+
 	if (col != 0)
-		fprintf(f, "\t.loc %u %u %u\n", curfile, line, col);
+		fprintf(f, ".loc %u %u %u\n", curfile, line, col);
 	else
-		fprintf(f, "\t.loc %u %u\n", curfile, line);
+		fprintf(f, ".loc %u %u\n", curfile, line);
 }

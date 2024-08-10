@@ -113,6 +113,12 @@ dbgfile(char *fn)
 	emitdbgfile(fn, outf);
 }
 
+static void
+dbgloc(int line, int col, int indent)
+{
+	emitdbgloc(line, col, indent, outf);
+}
+
 int
 main(int ac, char *av[])
 {
@@ -187,7 +193,7 @@ main(int ac, char *av[])
 				exit(1);
 			}
 		}
-		parse(inf, f, dbgfile, data, func);
+		parse(inf, f, dbgfile, dbgloc, data, func);
 		fclose(inf);
 	} while (++optind < ac);
 

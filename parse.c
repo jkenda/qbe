@@ -58,6 +58,7 @@ enum Token {
 	Tsection,
 	Talign,
 	Tdbgfile,
+	Tloc,
 	Tl,
 	Tw,
 	Tsh,
@@ -117,6 +118,7 @@ static char *kwmap[Ntok] = {
 	[Tsection] = "section",
 	[Talign] = "align",
 	[Tdbgfile] = "dbgfile",
+	[Tloc] = ".loc",
 	[Tsb] = "sb",
 	[Tub] = "ub",
 	[Tsh] = "sh",
@@ -1197,10 +1199,11 @@ parselnk(Lnk *lnk)
 }
 
 void
-parse(FILE *f, char *path, void dbgfile(char *), void data(Dat *), void func(Fn *))
+parse(FILE *f, char *path, void dbgfile(char *), void dbgloc(int, int, int), void data(Dat *), void func(Fn *))
 {
 	Lnk lnk;
 	uint n;
+	int srcln, srccol;
 
 	lexinit();
 	inf = f;
@@ -1217,6 +1220,13 @@ parse(FILE *f, char *path, void dbgfile(char *), void data(Dat *), void func(Fn 
 		case Tdbgfile:
 			expect(Tstr);
 			dbgfile(tokval.str);
+			break;
+		case Tloc:
+			expect(Tint);
+			srcln = tokval.num;
+			expect(Tint);
+			srccol = tokval.num;
+			dbgloc(srcln, srccol, 0);
 			break;
 		case Tfunc:
 			func(parsefn(&lnk));
