@@ -677,8 +677,8 @@ parseline(PState ps)
 		expect(Tnl);
 		closeblk();
 		return PLbl;
-	case Odbgloc:
-		op = t;
+	case Tloc:
+		op = Odbgloc;
 		k = Kw;
 		r = R;
 		expect(Tint);
@@ -1224,8 +1224,12 @@ parse(FILE *f, char *path, void dbgfile(char *), void dbgloc(int, int, int), voi
 		case Tloc:
 			expect(Tint);
 			srcln = tokval.num;
-			expect(Tint);
-			srccol = tokval.num;
+			if (peek() == Tcomma) {
+				next();
+				expect(Tint);
+				srccol = tokval.num;
+			} else
+				srccol = 0;
 			dbgloc(srcln, srccol, 0);
 			break;
 		case Tfunc:

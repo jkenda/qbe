@@ -1,6 +1,6 @@
 dbgfile "test/dbginfo.ssa"
 
-.loc 4 0
+.loc 4
 function w $add(w %a, w %b) {
 @start
     # .loc 7 5
@@ -10,24 +10,26 @@ function w $add(w %a, w %b) {
 }
 
 
-.loc 14 0
+.loc 14
 export function w $main(l %c, l %argv) {
 @start
-    # .loc 17 0
+    .loc 18, 0
 @loop
     jnz %c, @continue, @end
 @continue
-    # .loc 21 5
+    .loc 21, 5
     %c =l sub %c, 1
-    # .loc 23 5
+    .loc 23, 5
     jmp @loop
 @end
-    # .loc 26 5
+    .loc 26, 5
     %d =w call $add(w %c, w %c)
+    .loc 28, 5
     %e =w add 1, 2
     %f =w ceqw 2, 3
+    .loc 31, 5
     ret %f
 }
 
-.loc 30 0
+.loc 35
 data $fmt = { b "Hello, world!\n\0" }
